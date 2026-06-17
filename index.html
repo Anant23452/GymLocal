@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Titan Fitness Club — Premium Strength Training & Coaching in Varanasi</title>
+<meta name="description" content="Titan Fitness Club is a premium strength training gym offering certified coaching, group classes, online membership, workout booking, supplement store and progress tracking.">
+<meta name="theme-color" content="#0b0b0c">
+<meta property="og:title" content="Titan Fitness Club — Transform Your Body. Transform Your Life.">
+<meta property="og:description" content="Premium memberships, certified trainers, supplement store and a full member dashboard — all in one platform.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ============================================================
+   TITAN FITNESS CLUB — DESIGN TOKENS
+   Palette: void/charcoal ground, antique brass + ember accents
+   Display: Big Shoulders Display | Body: Inter | Data: JetBrains Mono
+   Signature: the Titanium Access Card motif (hero, plans, dashboard)
+   ============================================================ */
+:root{
+  --void:#0a0a0b;
+  --surface:#151517;
+  --surface-2:#1c1c1f;
+  --surface-3:#232327;
+  --line:rgba(255,255,255,.09);
+  --line-strong:rgba(255,255,255,.16);
+  --gold:#c9a24b;
+  --gold-bright:#e8c873;
+  --gold-dim:#8a7236;
+  --ember:#c1502f;
+  --ember-bright:#e2693f;
+  --bone:#f3efe6;
+  --steel:#a3a6ac;
+  --steel-dim:#6c6f76;
+  --success:#5fae72;
+  --warn:#d99a35;
+  --danger:#c1502f;
+  --radius-sm:4px;
+  --radius:8px;
+  --radius-lg:14px;
+  --shadow-card:0 1px 0 rgba(255,255,255,.04) inset, 0 12px 30px -16px rgba(0,0,0,.7);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --maxw:1200px;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--void);
+  color:var(--bone);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.01em;
+  line-height:.98;
+  margin:0;
+  color:var(--bone);
+}
+p{margin:0;}
+a{color:inherit;text-decoration:none;}
+ul{margin:0;padding:0;list-style:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,select,textarea{font-family:inherit;font-size:15px;color:var(--bone);}
+img{max-width:100%;display:block;}
+.mono{font-family:'JetBrains Mono',monospace;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
+}
+
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:var(--void);}
+::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:10px;}
+
+:focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px;border-radius:2px;}
+
+/* ---------- layout helpers ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+.page{display:none;}
+.page.active{display:block;animation:pageIn .5s var(--ease);}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;
+}
+.eyebrow::before{content:'';width:18px;height:1px;background:var(--gold);}
+.section{padding:96px 0;border-top:1px solid var(--line);}
+.section-head{max-width:640px;margin-bottom:48px;}
+.section-head h2{font-size:clamp(32px,5vw,48px);}
+.section-head .lede{color:var(--steel);font-size:17px;margin-top:14px;max-width:540px;}
+@media (max-width:720px){.section{padding:64px 0;}}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 26px;font-size:14px;font-weight:600;letter-spacing:.03em;
+  border-radius:var(--radius-sm);transition:transform .25s var(--ease),background .25s,border-color .25s,color .25s;
+  white-space:nowrap;
+}
+.btn:active{transform:scale(.97);}
+.btn-gold{background:var(--gold);color:#1a1305;}
+.btn-gold:hover{background:var(--gold-bright);}
+.btn-ember{background:var(--ember);color:var(--bone);}
+.btn-ember:hover{background:var(--ember-bright);}
+.btn-ghost{border:1px solid var(--line-strong);color:var(--bone);background:transparent;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright);}
+.btn-line{border:1px solid var(--gold-dim);color:var(--gold-bright);background:transparent;}
+.btn-line:hover{background:rgba(201,162,75,.1);}
+.btn-block{width:100%;}
+.btn-sm{padding:9px 16px;font-size:13px;}
+.btn[disabled]{opacity:.4;cursor:not-allowed;}
+.btn-icon{width:40px;height:40px;padding:0;border-radius:50%;border:1px solid var(--line-strong);display:inline-flex;align-items:center;justify-content:center;}
+.btn-icon:hover{border-color:var(--gold);color:var(--gold-bright);}
+
+/* ---------- navbar ---------- */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  backdrop-filter:blur(14px) saturate(140%);
+  background:rgba(10,10,11,.78);
+  border-bottom:1px solid var(--line);
+  transition:border-color .3s;
+}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 24px;height:72px;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Big Shoulders Display';font-weight:800;font-size:20px;letter-spacing:.02em;text-transform:uppercase;}
+.brand-badge{width:34px;height:34px;border-radius:6px;background:linear-gradient(155deg,var(--gold-bright),var(--gold) 55%,var(--gold-dim));display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:12px;font-weight:700;color:#1a1305;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-size:13.5px;font-weight:600;letter-spacing:.02em;color:var(--steel);transition:color .2s;position:relative;padding:4px 0;}
+.nav-links a:hover{color:var(--bone);}
+.nav-links a.active{color:var(--gold-bright);}
+.nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--gold);}
+.nav-actions{display:flex;align-items:center;gap:10px;}
+.nav-cart-btn{position:relative;}
+.cart-count{position:absolute;top:-6px;right:-6px;background:var(--ember);color:#fff;font-family:'JetBrains Mono';font-size:10px;min-width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 2px;}
+.nav-burger{display:none;width:40px;height:40px;align-items:center;justify-content:center;border:1px solid var(--line-strong);border-radius:6px;}
+.user-chip{display:flex;align-items:center;gap:8px;border:1px solid var(--line-strong);border-radius:30px;padding:6px 14px 6px 6px;font-size:13px;font-weight:600;}
+.user-chip .av{width:26px;height:26px;border-radius:50%;background:var(--gold);color:#1a1305;font-family:'JetBrains Mono';font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+
+@media (max-width:920px){
+  .nav-links{position:fixed;top:72px;left:0;right:0;background:var(--void);border-bottom:1px solid var(--line);flex-direction:column;align-items:flex-start;padding:18px 24px 26px;gap:18px;transform:translateY(-12px);opacity:0;pointer-events:none;transition:all .25s var(--ease);}
+  .nav-links.open{transform:none;opacity:1;pointer-events:auto;}
+  .nav-burger{display:flex;}
+  .nav-actions .btn-ghost{display:none;}
+}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;min-height:100vh;display:flex;align-items:center;
+  padding:140px 0 80px;overflow:hidden;
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 8%, rgba(201,162,75,.14), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 8% 92%, rgba(193,80,47,.10), transparent 60%),
+    linear-gradient(180deg,#0c0c0d, #0a0a0b 60%);
+}
+.hero-grid{position:absolute;inset:0;opacity:.5;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 75%);}
+.hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;}
+.hero-head h1{font-size:clamp(40px,7vw,76px);}
+.hero-head .accent{color:var(--gold-bright);}
+.hero-head .lede{margin-top:22px;font-size:18px;color:var(--steel);max-width:480px;}
+.hero-ctas{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;}
+.hero-trust{margin-top:46px;display:flex;gap:34px;flex-wrap:wrap;}
+.hero-trust .t-num{font-family:'JetBrains Mono';font-size:26px;font-weight:700;color:var(--gold-bright);}
+.hero-trust .t-lab{font-size:12px;color:var(--steel-dim);letter-spacing:.04em;text-transform:uppercase;margin-top:2px;}
+
+/* ----- Titanium access card (signature element) ----- */
+.card-stage{position:relative;height:380px;display:flex;align-items:center;justify-content:center;perspective:1200px;}
+.titan-card{
+  width:320px;aspect-ratio:1.586/1;border-radius:16px;position:relative;
+  background:linear-gradient(135deg,#2b2b30 0%,#17171a 45%,#0d0d0f 100%);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.08);
+  padding:22px 24px;display:flex;flex-direction:column;justify-content:space-between;
+  transform:rotateY(-18deg) rotateX(6deg) rotate(-2deg);
+  transition:transform .5s var(--ease);
+}
+.card-stage:hover .titan-card{transform:rotateY(-9deg) rotateX(3deg) rotate(-1deg) scale(1.02);}
+.titan-card::before{content:'';position:absolute;inset:0;border-radius:16px;background:linear-gradient(115deg,transparent 35%,rgba(232,200,115,.16) 50%,transparent 65%);pointer-events:none;}
+.titan-card .tc-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.titan-card .tc-chip{width:38px;height:28px;border-radius:5px;background:linear-gradient(155deg,var(--gold-bright),var(--gold-dim));position:relative;}
+.titan-card .tc-chip::after{content:'';position:absolute;inset:5px;border:1px solid rgba(0,0,0,.25);border-radius:2px;}
+.titan-card .tc-brand{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.16em;color:var(--gold-bright);text-align:right;}
+.titan-card .tc-name{font-family:'Big Shoulders Display';font-weight:700;font-size:22px;letter-spacing:.02em;color:var(--bone);text-transform:uppercase;}
+.titan-card .tc-row{display:flex;justify-content:space-between;align-items:flex-end;}
+.titan-card .tc-id{font-family:'JetBrains Mono';font-size:12px;color:var(--steel);letter-spacing:.04em;}
+.titan-card .tc-plan{font-family:'JetBrains Mono';font-size:11px;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--gold-dim);padding:3px 9px;border-radius:20px;}
+.card-glow{position:absolute;width:380px;height:380px;background:radial-gradient(circle,rgba(201,162,75,.18),transparent 70%);filter:blur(10px);z-index:0;}
+
+@media (max-width:920px){
+  .hero-inner{grid-template-columns:1fr;text-align:left;}
+  .card-stage{height:280px;margin-top:10px;}
+  .titan-card{width:280px;}
+}
+
+/* ---------- stats strip ---------- */
+.stats-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface);}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+.stat-cell{padding:34px 20px;text-align:center;border-right:1px solid var(--line);}
+.stat-cell:last-child{border-right:none;}
+.stat-num{font-family:'JetBrains Mono';font-weight:700;font-size:clamp(28px,4vw,40px);color:var(--gold-bright);}
+.stat-lab{font-size:12.5px;color:var(--steel);letter-spacing:.03em;margin-top:6px;text-transform:uppercase;}
+@media (max-width:720px){.stats-grid{grid-template-columns:repeat(2,1fr);}.stat-cell:nth-child(2){border-right:none;}}
+
+/* ---------- value props ---------- */
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+.value-card{background:var(--void);padding:34px 28px;}
+.value-card i{color:var(--gold);font-size:22px;}
+.value-card h3{font-size:21px;margin-top:18px;text-transform:none;letter-spacing:0;font-weight:700;}
+.value-card p{color:var(--steel);margin-top:10px;font-size:14.5px;}
+@media (max-width:820px){.value-grid{grid-template-columns:1fr;}}
+
+/* ---------- steps (genuine sequence) ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.step{position:relative;padding-top:18px;border-top:2px solid var(--gold-dim);}
+.step .step-no{font-family:'JetBrains Mono';color:var(--gold);font-size:13px;}
+.step h3{font-size:20px;margin-top:10px;text-transform:none;font-weight:700;}
+.step p{color:var(--steel);font-size:14px;margin-top:8px;}
+@media (max-width:820px){.steps{grid-template-columns:1fr;gap:30px;}}
+
+/* ---------- cta band ---------- */
+.cta-band{position:relative;padding:80px 0;text-align:center;background:linear-gradient(180deg,var(--surface),var(--void));border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.cta-band h2{font-size:clamp(28px,5vw,44px);}
+.cta-band p{color:var(--steel);margin-top:14px;}
+.cta-band .btn{margin-top:28px;}
+
+/* ---------- pricing ---------- */
+.term-toggle{display:inline-flex;border:1px solid var(--line-strong);border-radius:30px;padding:4px;margin-bottom:42px;}
+.term-toggle button{padding:8px 18px;font-size:13px;font-weight:600;border-radius:24px;color:var(--steel);transition:all .2s;}
+.term-toggle button.active{background:var(--gold);color:#1a1305;}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.plan-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:34px 30px;position:relative;display:flex;flex-direction:column;transition:transform .3s var(--ease),border-color .3s;}
+.plan-card:hover{transform:translateY(-6px);border-color:var(--line-strong);}
+.plan-card.featured{border-color:var(--gold-dim);background:linear-gradient(160deg,var(--surface-2),var(--surface));}
+.plan-card.featured::before{content:'MOST POPULAR';position:absolute;top:-12px;left:30px;background:var(--gold);color:#1a1305;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;padding:5px 12px;border-radius:3px;font-weight:700;}
+.plan-name{font-size:24px;}
+.plan-price{margin-top:18px;display:flex;align-items:baseline;gap:6px;}
+.plan-price .amt{font-family:'JetBrains Mono';font-size:38px;font-weight:700;color:var(--gold-bright);}
+.plan-price .per{color:var(--steel-dim);font-size:13px;}
+.plan-strike{font-family:'JetBrains Mono';color:var(--steel-dim);font-size:13px;text-decoration:line-through;margin-top:4px;}
+.plan-feats{margin:26px 0 30px;display:flex;flex-direction:column;gap:12px;}
+.plan-feats li{display:flex;gap:10px;font-size:14.5px;color:var(--bone);align-items:flex-start;}
+.plan-feats i{color:var(--success);margin-top:3px;}
+.plan-card .btn-group{margin-top:auto;display:flex;flex-direction:column;gap:10px;}
+@media (max-width:920px){.plans-grid{grid-template-columns:1fr;}}
+
+/* ---------- generic card grid + cards (trainers/products/etc) ---------- */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+@media (max-width:960px){.grid-3{grid-template-columns:repeat(2,1fr);}.grid-4{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:620px){.grid-3,.grid-4{grid-template-columns:1fr;}}
+
+.trainer-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s var(--ease),border-color .3s;}
+.trainer-card:hover{transform:translateY(-5px);border-color:var(--gold-dim);}
+.trainer-photo{height:160px;display:flex;align-items:center;justify-content:center;position:relative;background:linear-gradient(155deg,var(--surface-3),var(--surface-2));}
+.trainer-photo .mono-av{width:78px;height:78px;border-radius:50%;border:2px solid var(--gold-dim);display:flex;align-items:center;justify-content:center;font-family:'Big Shoulders Display';font-size:28px;font-weight:800;color:var(--gold-bright);background:var(--surface);}
+.trainer-photo .role-tag{position:absolute;bottom:10px;left:10px;background:rgba(10,10,11,.75);border:1px solid var(--line-strong);font-family:'JetBrains Mono';font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:3px;color:var(--gold-bright);}
+.trainer-body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1;}
+.trainer-body h3{font-size:21px;text-transform:none;font-weight:700;letter-spacing:0;}
+.trainer-meta{color:var(--steel);font-size:13.5px;}
+.trainer-certs{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+.trainer-certs span{font-family:'JetBrains Mono';font-size:10.5px;border:1px solid var(--line-strong);padding:3px 8px;border-radius:3px;color:var(--steel);}
+.trainer-body .btn{margin-top:auto;}
+
+/* product cards */
+.cat-chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+.cat-chip{border:1px solid var(--line-strong);padding:8px 16px;border-radius:30px;font-size:13px;font-weight:600;color:var(--steel);transition:all .2s;}
+.cat-chip.active{background:var(--gold);border-color:var(--gold);color:#1a1305;}
+.product-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s var(--ease),border-color .3s;}
+.product-card:hover{transform:translateY(-5px);border-color:var(--gold-dim);}
+.product-art{height:150px;display:flex;align-items:center;justify-content:center;position:relative;}
+.product-art i{font-size:46px;color:var(--gold-bright);opacity:.9;}
+.product-art .pa-band{position:absolute;left:0;right:0;bottom:0;height:4px;}
+.product-body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.product-cat{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--steel-dim);}
+.product-body h3{font-size:18px;text-transform:none;font-weight:700;letter-spacing:0;}
+.product-body p{color:var(--steel);font-size:13.5px;}
+.product-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:10px;}
+.product-price{font-family:'JetBrains Mono';font-size:18px;font-weight:700;color:var(--gold-bright);}
+
+/* ---------- schedule ---------- */
+.schedule-table{width:100%;border-collapse:collapse;font-size:14px;}
+.schedule-table th{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--steel-dim);text-align:left;padding:12px 14px;border-bottom:1px solid var(--line-strong);}
+.schedule-table td{padding:14px;border-bottom:1px solid var(--line);color:var(--steel);}
+.schedule-table .cls-tag{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--bone);}
+.schedule-table .dot{width:8px;height:8px;border-radius:50%;}
+.schedule-card-mobile{display:none;}
+@media (max-width:760px){
+  .schedule-table-wrap{display:none;}
+  .schedule-card-mobile{display:block;}
+  .day-block{margin-bottom:26px;}
+  .day-block h4{font-size:18px;color:var(--gold-bright);text-transform:uppercase;margin-bottom:10px;}
+  .class-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;}
+}
+
+/* ---------- success stories ---------- */
+.transform-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px;}
+.transform-card .tr-name{font-size:19px;font-weight:700;}
+.transform-card .tr-goal{font-family:'JetBrains Mono';font-size:11px;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;}
+.tr-bars{display:flex;gap:18px;align-items:flex-end;height:90px;margin:22px 0;}
+.tr-bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+.tr-bar .bar{width:46px;border-radius:4px 4px 0 0;}
+.tr-bar.before .bar{background:var(--surface-3);}
+.tr-bar.after .bar{background:linear-gradient(180deg,var(--gold-bright),var(--gold));}
+.tr-bar .bv{font-family:'JetBrains Mono';font-size:13px;margin-top:8px;color:var(--steel);}
+.tr-bar .bl{font-size:11px;color:var(--steel-dim);text-transform:uppercase;letter-spacing:.06em;}
+.tr-duration{font-size:12.5px;color:var(--steel-dim);border-top:1px solid var(--line);padding-top:12px;}
+
+.review-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:24px;}
+.review-stars{color:var(--gold);font-size:13px;letter-spacing:2px;}
+.review-card p{margin-top:12px;color:var(--bone);font-size:14.5px;}
+.review-foot{margin-top:16px;display:flex;justify-content:space-between;font-size:12.5px;color:var(--steel-dim);}
+
+/* ---------- nutrition ---------- */
+.nutri-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:30px;display:flex;flex-direction:column;}
+.nutri-card h3{font-size:23px;}
+.nutri-card .nutri-goal{color:var(--steel);font-size:13.5px;margin-top:6px;}
+.macro-row{display:flex;gap:10px;margin:22px 0;}
+.macro-pill{flex:1;text-align:center;background:var(--surface-2);border-radius:6px;padding:12px 6px;}
+.macro-pill .mv{font-family:'JetBrains Mono';font-weight:700;color:var(--gold-bright);font-size:16px;}
+.macro-pill .ml{font-size:10px;color:var(--steel-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+.meal-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
+.meal-list li{font-size:13.5px;color:var(--steel);display:flex;gap:8px;}
+.meal-list i{color:var(--gold);margin-top:3px;font-size:11px;}
+
+/* ---------- forms ---------- */
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:12.5px;color:var(--steel);margin-bottom:7px;letter-spacing:.02em;text-transform:uppercase;font-weight:600;}
+.field input,.field select,.field textarea{
+  width:100%;background:var(--surface-2);border:1px solid var(--line-strong);border-radius:6px;
+  padding:12px 14px;transition:border-color .2s;
+}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--gold);outline:none;}
+.field textarea{resize:vertical;min-height:90px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media (max-width:560px){.field-row{grid-template-columns:1fr;}}
+.radio-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.radio-chip{border:1px solid var(--line-strong);border-radius:6px;padding:12px 14px;font-size:13.5px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .2s;}
+.radio-chip.sel{border-color:var(--gold);background:rgba(201,162,75,.08);color:var(--gold-bright);}
+.radio-chip.full{opacity:.4;cursor:not-allowed;}
+.form-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:36px;max-width:560px;}
+.form-note{font-size:12.5px;color:var(--steel-dim);margin-top:6px;}
+
+/* ---------- auth modal ---------- */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:900;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-backdrop.open{display:flex;}
+.modal{background:var(--surface-2);border:1px solid var(--line-strong);border-radius:var(--radius-lg);max-width:440px;width:100%;max-height:88vh;overflow-y:auto;padding:30px 30px 28px;position:relative;animation:modalIn .3s var(--ease);}
+@keyframes modalIn{from{opacity:0;transform:translateY(14px) scale(.98);}to{opacity:1;transform:none;}}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--steel);}
+.modal-close:hover{background:var(--surface-3);color:var(--bone);}
+.modal-tabs{display:flex;gap:4px;background:var(--surface);border-radius:6px;padding:4px;margin-bottom:24px;}
+.modal-tabs button{flex:1;padding:9px;font-size:13px;font-weight:600;border-radius:5px;color:var(--steel);}
+.modal-tabs button.active{background:var(--gold);color:#1a1305;}
+
+/* ---------- toasts ---------- */
+#toast-container{position:fixed;top:88px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
+.toast{background:var(--surface-2);border:1px solid var(--line-strong);border-left:3px solid var(--gold);border-radius:6px;padding:13px 18px;font-size:13.5px;max-width:320px;box-shadow:0 14px 30px -10px rgba(0,0,0,.6);animation:toastIn .3s var(--ease);display:flex;gap:10px;align-items:flex-start;}
+.toast.err{border-left-color:var(--ember);}
+.toast i{color:var(--gold);margin-top:1px;}
+.toast.err i{color:var(--ember-bright);}
+@keyframes toastIn{from{opacity:0;transform:translateX(16px);}to{opacity:1;transform:none;}}
+
+/* ---------- dashboard ---------- */
+.dash-shell{display:grid;grid-template-columns:230px 1fr;gap:0;min-height:70vh;}
+.dash-side{border-right:1px solid var(--line);padding:30px 18px;}
+.dash-side button{width:100%;text-align:left;padding:11px 14px;border-radius:6px;font-size:14px;font-weight:600;color:var(--steel);display:flex;align-items:center;gap:10px;margin-bottom:4px;transition:all .2s;}
+.dash-side button.active{background:var(--surface-2);color:var(--gold-bright);}
+.dash-side button:hover{color:var(--bone);}
+.dash-main{padding:34px;}
+@media (max-width:860px){
+  .dash-shell{grid-template-columns:1fr;}
+  .dash-side{display:none;}
+  .dash-main{padding:22px 18px 100px;}
+  .dash-tabbar{display:flex !important;}
+}
+.dash-tabbar{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(15,15,17,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line-strong);z-index:400;padding:8px 4px;justify-content:space-around;}
+.dash-tabbar button{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10.5px;color:var(--steel-dim);padding:6px 4px;flex:1;}
+.dash-tabbar button i{font-size:17px;}
+.dash-tabbar button.active{color:var(--gold-bright);}
+
+.status-badge{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.05em;text-transform:uppercase;padding:5px 12px;border-radius:20px;display:inline-flex;align-items:center;gap:6px;}
+.status-badge .dot{width:6px;height:6px;border-radius:50%;}
+.status-active{background:rgba(95,174,114,.12);color:var(--success);}
+.status-active .dot{background:var(--success);}
+.status-expiring{background:rgba(217,154,53,.12);color:var(--warn);}
+.status-expiring .dot{background:var(--warn);}
+.status-expired{background:rgba(193,80,47,.12);color:var(--ember-bright);}
+.status-expired .dot{background:var(--ember-bright);}
+
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
+@media (max-width:760px){.dash-grid{grid-template-columns:repeat(2,1fr);}}
+.kpi-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;}
+.kpi-card .kv{font-family:'JetBrains Mono';font-size:26px;font-weight:700;color:var(--gold-bright);}
+.kpi-card .kl{font-size:12px;color:var(--steel-dim);margin-top:4px;text-transform:uppercase;letter-spacing:.04em;}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px;margin-bottom:22px;}
+.panel-title{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--steel);font-weight:700;margin-bottom:16px;}
+.data-table{width:100%;border-collapse:collapse;font-size:14px;}
+.data-table th{text-align:left;color:var(--steel-dim);font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:8px 10px;border-bottom:1px solid var(--line-strong);}
+.data-table td{padding:11px 10px;border-bottom:1px solid var(--line);color:var(--bone);}
+.data-table tr:last-child td{border-bottom:none;}
+.empty-row{color:var(--steel-dim);text-align:center;padding:30px 10px;font-size:13.5px;}
+
+.trainer-pick{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;}
+.tp-card{flex:0 0 150px;border:1px solid var(--line-strong);border-radius:8px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;}
+.tp-card.sel{border-color:var(--gold);background:rgba(201,162,75,.08);}
+.tp-card .av{width:48px;height:48px;border-radius:50%;background:var(--surface-3);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-family:'Big Shoulders Display';font-weight:800;color:var(--gold-bright);}
+.tp-card .nm{font-size:13px;font-weight:700;}
+.tp-card .rl{font-size:10.5px;color:var(--steel-dim);}
+
+/* progress chart */
+.chart-wrap{margin-top:6px;}
+.bmi-meter{height:8px;border-radius:4px;background:linear-gradient(90deg,#4f7fd1,#5fae72 35%,#d99a35 65%,#c1502f);position:relative;margin:14px 0 6px;}
+.bmi-meter .needle{position:absolute;top:-4px;width:2px;height:16px;background:var(--bone);transform:translateX(-1px);}
+.bmi-scale{display:flex;justify-content:space-between;font-size:10.5px;color:var(--steel-dim);}
+
+/* admin */
+.admin-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:12px;}
+.admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px;}
+.admin-tabs button{padding:9px 16px;border:1px solid var(--line-strong);border-radius:6px;font-size:13px;font-weight:600;color:var(--steel);}
+.admin-tabs button.active{background:var(--gold);border-color:var(--gold);color:#1a1305;}
+.table-actions{display:flex;gap:8px;}
+.table-actions button{padding:6px 10px;border:1px solid var(--line-strong);border-radius:5px;font-size:12px;}
+.table-actions button:hover{border-color:var(--gold);color:var(--gold-bright);}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:60px 0 30px;background:var(--surface);}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:46px;}
+.foot-grid h4{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--steel);margin-bottom:16px;font-weight:700;}
+.foot-grid ul{display:flex;flex-direction:column;gap:10px;}
+.foot-grid a{font-size:13.5px;color:var(--steel);}
+.foot-grid a:hover{color:var(--gold-bright);}
+.foot-brand p{color:var(--steel);font-size:13.5px;margin-top:14px;max-width:320px;}
+.foot-social{display:flex;gap:10px;margin-top:18px;}
+.foot-bottom{border-top:1px solid var(--line);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--steel-dim);}
+.foot-bottom a{color:var(--steel-dim);}
+.foot-bottom a:hover{color:var(--gold-bright);}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr 1fr;}}
+
+/* floating widgets */
+.fab-wa{position:fixed;bottom:24px;left:24px;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;z-index:300;box-shadow:0 10px 24px -8px rgba(0,0,0,.6);transition:transform .25s;}
+.fab-wa:hover{transform:scale(1.08);}
+
+.fab-ai{position:fixed;bottom:24px;right:24px;z-index:300;display:flex;flex-direction:column;align-items:flex-end;gap:14px;}
+.fab-ai-btn{width:58px;height:58px;border-radius:50%;background:linear-gradient(155deg,var(--gold-bright),var(--gold));display:flex;align-items:center;justify-content:center;font-size:23px;color:#1a1305;box-shadow:0 10px 26px -8px rgba(0,0,0,.7);transition:transform .25s;position:relative;}
+.fab-ai-btn:hover{transform:scale(1.07);}
+.fab-ai-btn .pulse{position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--gold);animation:pulse 2.4s infinite;}
+@keyframes pulse{0%{opacity:.7;transform:scale(.9);}100%{opacity:0;transform:scale(1.3);}}
+.chat-panel{width:332px;max-height:480px;background:var(--surface-2);border:1px solid var(--line-strong);border-radius:14px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 24px 50px -16px rgba(0,0,0,.8);}
+.chat-panel.open{display:flex;animation:modalIn .25s var(--ease);}
+.chat-head{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;background:var(--surface-3);}
+.chat-head .ch-title{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px;}
+.chat-head .ch-dot{width:7px;height:7px;border-radius:50%;background:var(--success);}
+.chat-body{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-height:220px;max-height:330px;}
+.chat-msg{max-width:84%;padding:9px 12px;border-radius:10px;font-size:13.5px;line-height:1.45;}
+.chat-msg.bot{background:var(--surface-3);align-self:flex-start;border-bottom-left-radius:3px;}
+.chat-msg.user{background:var(--gold);color:#1a1305;align-self:flex-end;border-bottom-right-radius:3px;font-weight:500;}
+.chat-msg.typing{display:flex;gap:4px;align-items:center;}
+.chat-msg.typing span{width:6px;height:6px;border-radius:50%;background:var(--steel);animation:blink 1.2s infinite;}
+.chat-msg.typing span:nth-child(2){animation-delay:.2s;}
+.chat-msg.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,100%{opacity:.3;}50%{opacity:1;}}
+.chat-input-row{display:flex;border-top:1px solid var(--line);padding:10px;gap:8px;}
+.chat-input-row input{flex:1;background:var(--surface);border:1px solid var(--line-strong);border-radius:20px;padding:9px 14px;font-size:13px;}
+.chat-input-row button{width:36px;height:36px;border-radius:50%;background:var(--gold);color:#1a1305;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+@media (max-width:520px){
+  .chat-panel{width:88vw;}
+  .fab-wa{width:48px;height:48px;left:16px;bottom:16px;font-size:20px;}
+  .fab-ai-btn{width:50px;height:50px;right:0;}
+  .fab-ai{right:16px;bottom:16px;}
+}
+
+@media print{
+  body *{visibility:hidden;}
+  #print-area, #print-area *{visibility:visible;}
+  #print-area{position:absolute;top:0;left:0;width:100%;padding:40px;color:#000;background:#fff;}
+}
+</style>
+</head>
+<body>
+
+<div id="toast-container"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="brand" onclick="go('home');return false;" aria-label="Titan Fitness Club home">
+      <span class="brand-badge">TFC</span> Titan Fitness Club
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#" data-nav="home" onclick="go('home');return false;">Home</a>
+      <a href="#" data-nav="plans" onclick="go('plans');return false;">Plans</a>
+      <a href="#" data-nav="trainers" onclick="go('trainers');return false;">Trainers</a>
+      <a href="#" data-nav="store" onclick="go('store');return false;">Store</a>
+      <a href="#" data-nav="schedule" onclick="go('schedule');return false;">Schedule</a>
+      <a href="#" data-nav="stories" onclick="go('stories');return false;">Stories</a>
+      <a href="#" data-nav="nutrition" onclick="go('nutrition');return false;">Nutrition</a>
+      <a href="#" data-nav="contact" onclick="go('contact');return false;">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-icon nav-cart-btn" onclick="go('cart');return false;" aria-label="Cart">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="cart-count" id="cartCount" style="display:none;">0</span>
+      </button>
+      <div id="navAuthArea"></div>
+      <button class="nav-burger" onclick="toggleMobileNav()" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<main id="app">
+
+<section id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-head">
+        <div class="eyebrow">Premium Strength & Coaching Club</div>
+        <h1>Transform Your<br>Body. Transform<br>Your <span class="accent">Life.</span></h1>
+        <p class="lede">Titan Fitness Club pairs serious equipment with certified coaching, structured programming and a full digital dashboard — so every session moves you closer to the body you're training for.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-gold" onclick="openAuth('register')"><i class="fa-solid fa-bolt"></i> Join Now</button>
+          <button class="btn btn-ghost" onclick="openTrialModal()"><i class="fa-regular fa-calendar-check"></i> Book Free Trial</button>
+        </div>
+        <div class="hero-trust">
+          <div><div class="t-num" id="statMembers">0</div><div class="t-lab">Active Members</div></div>
+          <div><div class="t-num" id="statTrainers">0</div><div class="t-lab">Certified Trainers</div></div>
+          <div><div class="t-num" id="statStories">0</div><div class="t-lab">Success Stories</div></div>
+          <div><div class="t-num" id="statYears">0</div><div class="t-lab">Years Experience</div></div>
+        </div>
+      </div>
+      <div class="card-stage">
+        <div class="card-glow" aria-hidden="true"></div>
+        <div class="titan-card">
+          <div class="tc-top">
+            <div class="tc-chip"></div>
+            <div class="tc-brand">TITAN<br>FITNESS CLUB</div>
+          </div>
+          <div>
+            <div class="tc-name">Guest Access</div>
+          </div>
+          <div class="tc-row">
+            <div class="tc-id">TFC · PREVIEW</div>
+            <div class="tc-plan">Premium</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-strip">
+    <div class="wrap stats-grid">
+      <div class="stat-cell"><div class="stat-num" data-count="1240">0</div><div class="stat-lab">Active Members</div></div>
+      <div class="stat-cell"><div class="stat-num" data-count="18">0</div><div class="stat-lab">Certified Trainers</div></div>
+      <div class="stat-cell"><div class="stat-num" data-count="350">0</div><div class="stat-lab">Success Stories</div></div>
+      <div class="stat-cell"><div class="stat-num" data-count="12">0</div><div class="stat-lab">Years Experience</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Why Titan</div>
+        <h2>Built For People Serious<br>About The Work</h2>
+        <p class="lede">No fads, no gimmicks — a club designed around consistent training, real coaching and a dashboard that keeps you accountable.</p>
+      </div>
+      <div class="value-grid reveal">
+        <div class="value-card">
+          <i class="fa-solid fa-user-tie"></i>
+          <h3>Coached, Not Just Counted</h3>
+          <p>Every plan includes guidance from certified trainers — not just floor access and a punch card.</p>
+        </div>
+        <div class="value-card">
+          <i class="fa-solid fa-chart-line"></i>
+          <h3>Built On Iron, Run On Data</h3>
+          <p>Track attendance, bookings, progress and renewals from one member dashboard, on any device.</p>
+        </div>
+        <div class="value-card">
+          <i class="fa-solid fa-sun"></i>
+          <h3>Open Before Sunrise</h3>
+          <p>6:00 AM sessions for people who train before the world wakes up, and 10:00 PM for the rest of us.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">How It Works</div>
+        <h2>Three Steps To Your<br>First Session</h2>
+      </div>
+      <div class="steps reveal">
+        <div class="step">
+          <div class="step-no">01</div>
+          <h3>Choose your plan</h3>
+          <p>Compare Basic, Standard and Premium and pick the level of coaching you need.</p>
+        </div>
+        <div class="step">
+          <div class="step-no">02</div>
+          <h3>Register online</h3>
+          <p>Fill a short form and get your Membership ID, join date and Titan Access Card instantly.</p>
+        </div>
+        <div class="step">
+          <div class="step-no">03</div>
+          <h3>Walk in and train</h3>
+          <p>Book your trainer and time slot from the dashboard, then show up and do the work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-band">
+    <div class="wrap reveal">
+      <h2>Ready To Become A Titan?</h2>
+      <p>Free trial sessions are open every week — no commitment, just one honest workout.</p>
+      <button class="btn btn-gold" onclick="openAuth('register')"><i class="fa-solid fa-bolt"></i> Join Now</button>
+    </div>
+  </div>
+</section>
+
+<section id="page-plans" class="page">
+  <div class="section" style="padding-top:140px;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Membership Plans</div>
+        <h2>Three Ways To Train</h2>
+        <p class="lede">No hidden fees and no long-term traps. Pick a term below — renew, upgrade or cancel on your own schedule from the dashboard.</p>
+      </div>
+      <div style="display:flex;justify-content:center;">
+        <div class="term-toggle" id="termToggle"></div>
+      </div>
+      <div class="plans-grid" id="plansGrid"></div>
+      <p style="text-align:center;color:var(--steel-dim);font-size:13px;margin-top:30px;">Prices shown in INR. A digital Titan Access Card and member dashboard are included with every plan.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap" style="max-width:760px;">
+      <div class="section-head reveal">
+        <div class="eyebrow">Good To Know</div>
+        <h2>Plan FAQ</h2>
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;">
+        <div style="background:var(--surface);padding:20px 24px;"><strong>Can I switch plans later?</strong><p style="color:var(--steel);margin-top:6px;font-size:14px;">Yes — upgrade or downgrade anytime from your dashboard; the change applies on your next renewal.</p></div>
+        <div style="background:var(--surface);padding:20px 24px;"><strong>Is there a joining fee?</strong><p style="color:var(--steel);margin-top:6px;font-size:14px;">No joining fee. The price you see is the price you pay.</p></div>
+        <div style="background:var(--surface);padding:20px 24px;"><strong>What happens when my membership expires?</strong><p style="color:var(--steel);margin-top:6px;font-size:14px;">Your dashboard flags renewals 7 days out. After expiry, gym access pauses until you renew — your data and history stay intact.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="page-trainers" class="page">
+  <div class="section" style="padding-top:140px;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Our Coaching Staff</div>
+        <h2>Train With People<br>Who've Done The Work</h2>
+        <p class="lede">Every Titan trainer is certified, specialised and available to book directly from the member dashboard.</p>
+      </div>
+      <div class="grid-4" id="trainersGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section id="page-store" class="page">
+  <div class="section" style="padding-top:140px;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Titan Supplement Store</div>
+        <h2>Fuel The Work</h2>
+        <p class="lede">Protein, performance and recovery gear — shipped to your door or picked up at the front desk.</p>
+      </div>
+      <div class="cat-chips" id="catChips"></div>
+      <div class="grid-4" id="productsGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section id="page-cart" class="page">
+  <div class="section" style="padding-top:140px;">
+    <div class="wrap" style="max-width:760px;">
+      <div class="section-head">
+        <div class="eyebrow">Your Cart</div>
+        <h2>Review Order</h2>
+      </div>
+      <div id="cartItems"></div>
+      <div class="panel" id="cartSummary" style="display:none;">
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--steel);margin-bottom:8px;"><span>Subtotal</span><span class="mono" id="cartSubtotal">₹0</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--steel);margin-bottom:14px;"><span>Shipping</span><span class="mono">₹49</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:19px;font-weight:700;border-top:1px solid var(--line);padding-top:14px;"><span>Total</span><span class="mono" id="cartTotal">₹0</span></div>
+        <button class="btn btn-gold btn-block" style="margin-top:20px;" onclick="go('checkout')">Proceed To Checkout</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="page-checkout" class="page">
+  <div class="section" style="padding-top:140px;">
+    <div class="wrap" style="max-width:560px;">
+      <div class="section-head">
+        <div class="eyebrow">Checkout</div>
+        <h2>Shipping & Payment</h2>
+      </div>
+      <form class="form-card" id="checkoutForm" onsubmit="placeOrder(event)">
+        <div class="field"><label>Full Name</label><input type="text" required id="coName"></div>
+        <div class="field"><label>Delivery Address</label><textarea required id="coAddress" placeholder="House no, street, city, pincode"></textarea></div>
+        <div class="field"><label>Phone Number</label><input type="tel" required pattern="[0-9]{10}" id="coPhone" placeholder="10-digit mobile number"></div>
+        <div class="field">
+          <label>Payment Method</label>
+          <div class="radio-grid" id="payMethodGrid">
+            <div class="radio-chip sel" data-pay="upi" onclick="selectPay('upi')">UPI <i class="fa-solid fa-circle-check" style="opacity:0;"></i></div>
+            <div class="radio-chip" data-pay="card" onclick="selectPay('card')">Card</div>
+            <div class="radio-chip" data-pay="cod" onclick="selectPay('cod')">Cash on Delivery</div>
+            <div class="radio-chip" data-pay="wallet" onclick="selectPay('wallet')">Wallet</div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:6px;">
+          <div style="display:flex;justify-content:space-between;font-size:18px;font-weight:700;"><span>Total Payable</span><span class="mono" id="checkoutTotal">₹0</span></div>
+        </div>
+        <button type="submit" class="btn btn-gold btn-block"><i class="fa-solid fa-lock"></i> Place Order</button>
+        <p class="form-note" style="text-align:center;margin-top:12px;">Demo checkout — no real payment is processed.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="page-schedule" class="page">
+  <div class="section" style="padding-top:140px;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Weekly Timetable</div>
+        <h2>Class Schedule</h2>
+        <p class="lede">Drop into any class included with Standard and Premium plans — Basic members can join for a small per-class fee at the desk.</p>
+      </div>
+      <div class="schedule-table-wrap">
+        <table class="schedule-table">
+          <thead><tr><th>Day</th><th>Time</th><th>Class</th><th>Trainer</th></tr></thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+      </div>
+      <div class="schedule-card-mobile" id="scheduleMobile"></div>
+    </div>
+  </div>
+</section>
+
+<section id="page-stories" class="page">
+  <div class="section" style="padding-top:140px;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Success Stories</div>
+        <h2>Real Members,<br>Measured Results</h2>
+      </div>
+      <div class="grid-4" id="transformGrid"></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Member Reviews</div>
+        <h2>What Members Say</h2>
+      </div>
+      <div class="grid-3" id="reviewsGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section id="page-nutrition" class="page">
+  <div class="section" style="padding-top:140px;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Fitness Guidance</div>
+        <h2>Nutrition Plans</h2>
+        <p class="lede">General guidance built by our coaching team. For medical conditions or allergies, consult a registered dietitian before starting any plan.</p>
+      </div>
+      <div class="grid-3" id="nutritionGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section id="page-contact" class="page">
+  <div class="section" style="padding-top:140px;">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Get In Touch</div>
+        <h2>Visit Or Message Us</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:30px;" id="contactGrid">
+        <div>
+          <iframe src="https://www.google.com/maps?q=Sigra,Varanasi,Uttar+Pradesh&output=embed" width="100%" height="300" style="border:1px solid var(--line);border-radius:var(--radius-lg);filter:invert(.9) hue-rotate(180deg) contrast(.9);" loading="lazy" title="Titan Fitness Club location map"></iframe>
+          <div class="panel" style="margin-top:20px;">
+            <div style="display:flex;gap:14px;margin-bottom:16px;"><i class="fa-solid fa-location-dot" style="color:var(--gold);width:20px;"></i><span style="color:var(--steel);font-size:14px;">Titan Fitness Club, Sigra,<br>Varanasi, Uttar Pradesh 221010</span></div>
+            <div style="display:flex;gap:14px;margin-bottom:16px;"><i class="fa-solid fa-phone" style="color:var(--gold);width:20px;"></i><a href="tel:+919876543210" style="font-size:14px;">+91 98765 43210</a></div>
+            <div style="display:flex;gap:14px;margin-bottom:16px;"><i class="fa-solid fa-envelope" style="color:var(--gold);width:20px;"></i><a href="mailto:hello@titanfitnessclub.in" style="font-size:14px;">hello@titanfitnessclub.in</a></div>
+            <div style="display:flex;gap:14px;margin-bottom:18px;"><i class="fa-solid fa-clock" style="color:var(--gold);width:20px;"></i><span style="color:var(--steel);font-size:14px;">Mon–Sat: 5:00 AM – 10:00 PM<br>Sun: 7:00 AM – 12:00 PM</span></div>
+            <a href="https://wa.me/919876543210?text=Hi%20Titan%20Fitness%20Club%2C%20I%27d%20like%20to%20know%20more." target="_blank" class="btn btn-gold btn-block"><i class="fa-brands fa-whatsapp"></i> Chat On WhatsApp</a>
+          </div>
+        </div>
+        <form class="form-card" style="margin:0;max-width:none;" onsubmit="submitContact(event)">
+          <div class="field"><label>Full Name</label><input type="text" required id="cName"></div>
+          <div class="field"><label>Email</label><input type="email" required id="cEmail"></div>
+          <div class="field"><label>Phone Number</label><input type="tel" id="cPhone"></div>
+          <div class="field"><label>Message</label><textarea required id="cMessage" placeholder="Ask about plans, trainers, or anything else"></textarea></div>
+          <button type="submit" class="btn btn-gold btn-block"><i class="fa-solid fa-paper-plane"></i> Send Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="page-dashboard" class="page">
+  <div style="padding-top:88px;">
+    <div class="dash-shell">
+      <aside class="dash-side">
+        <button data-dtab="overview" onclick="setDashTab('overview')"><i class="fa-solid fa-gauge"></i> Overview</button>
+        <button data-dtab="book" onclick="setDashTab('book')"><i class="fa-regular fa-calendar-check"></i> Book A Session</button>
+        <button data-dtab="bookings" onclick="setDashTab('bookings')"><i class="fa-solid fa-list-check"></i> My Bookings</button>
+        <button data-dtab="attendance" onclick="setDashTab('attendance')"><i class="fa-solid fa-fingerprint"></i> Attendance</button>
+        <button data-dtab="progress" onclick="setDashTab('progress')"><i class="fa-solid fa-chart-line"></i> Progress</button>
+        <button data-dtab="orders" onclick="setDashTab('orders')"><i class="fa-solid fa-bag-shopping"></i> My Orders</button>
+        <hr style="border-color:var(--line);margin:16px 0;">
+        <button onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
+      </aside>
+      <div class="dash-main" id="dashMain"></div>
+    </div>
+  </div>
+  <div class="dash-tabbar">
+    <button data-dtab="overview" onclick="setDashTab('overview')"><i class="fa-solid fa-gauge"></i>Overview</button>
+    <button data-dtab="book" onclick="setDashTab('book')"><i class="fa-regular fa-calendar-check"></i>Book</button>
+    <button data-dtab="attendance" onclick="setDashTab('attendance')"><i class="fa-solid fa-fingerprint"></i>Attend.</button>
+    <button data-dtab="progress" onclick="setDashTab('progress')"><i class="fa-solid fa-chart-line"></i>Progress</button>
+    <button data-dtab="orders" onclick="setDashTab('orders')"><i class="fa-solid fa-bag-shopping"></i>Orders</button>
+  </div>
+</section>
+
+<section id="page-admin-login" class="page">
+  <div class="section" style="padding-top:160px;min-height:80vh;">
+    <div class="wrap" style="max-width:420px;">
+      <div class="form-card" style="margin:0 auto;">
+        <div class="eyebrow">Staff Portal</div>
+        <h2 style="font-size:26px;margin-bottom:20px;">Admin Login</h2>
+        <form onsubmit="adminLogin(event)">
+          <div class="field"><label>Username</label><input type="text" id="adminUser" value="admin" required></div>
+          <div class="field"><label>Password</label><input type="password" id="adminPass" placeholder="demo: titan-admin" required></div>
+          <button type="submit" class="btn btn-gold btn-block">Sign In</button>
+        </form>
+        <p class="form-note" style="text-align:center;margin-top:14px;">Demo credentials — username <strong>admin</strong>, password <strong>titan-admin</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="page-admin" class="page">
+  <div class="section" style="padding-top:110px;">
+    <div class="wrap">
+      <div class="admin-bar">
+        <div>
+          <div class="eyebrow">Staff Portal</div>
+          <h2 style="font-size:28px;">Admin Dashboard</h2>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="adminLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out</button>
+      </div>
+      <div class="admin-tabs" id="adminTabs"></div>
+      <div id="adminMain"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand"><span class="brand-badge">TFC</span> Titan Fitness Club</div>
+        <p>Strength is a discipline, not a destination. A premium training club in Varanasi for people who show up and do the work.</p>
+        <div class="foot-social">
+          <a href="#" class="btn-icon" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="btn-icon" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="btn-icon" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#" onclick="go('plans');return false;">Membership Plans</a></li>
+          <li><a href="#" onclick="go('trainers');return false;">Trainers</a></li>
+          <li><a href="#" onclick="go('schedule');return false;">Class Schedule</a></li>
+          <li><a href="#" onclick="go('stories');return false;">Success Stories</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Member</h4>
+        <ul>
+          <li><a href="#" onclick="openAuth('register');return false;">Join Now</a></li>
+          <li><a href="#" onclick="openAuth('login');return false;">Member Login</a></li>
+          <li><a href="#" onclick="go('store');return false;">Supplement Store</a></li>
+          <li><a href="#" onclick="go('nutrition');return false;">Nutrition Plans</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+          <li><a href="mailto:hello@titanfitnessclub.in">hello@titanfitnessclub.in</a></li>
+          <li><a href="#" onclick="go('contact');return false;">Sigra, Varanasi</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Titan Fitness Club. All rights reserved.</span>
+      <a href="#" onclick="go('admin-login');return false;">Staff Portal</a>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('authModal')"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-tabs">
+      <button id="tabLogin" onclick="switchAuthTab('login')">Member Login</button>
+      <button id="tabRegister" onclick="switchAuthTab('register')">Register</button>
+    </div>
+
+    <div id="loginPane">
+      <h3 style="font-size:22px;text-transform:none;margin-bottom:18px;">Welcome Back</h3>
+      <form onsubmit="doLogin(event)">
+        <div class="field"><label>Membership ID</label><input type="text" id="loginId" placeholder="TFC-1001" required></div>
+        <div class="field"><label>Phone Number</label><input type="tel" id="loginPhone" placeholder="10-digit mobile number" required></div>
+        <button type="submit" class="btn btn-gold btn-block">Log In</button>
+      </form>
+      <button class="btn btn-line btn-block" style="margin-top:10px;" onclick="demoLogin()"><i class="fa-solid fa-flask"></i> View Demo Dashboard</button>
+      <p class="form-note" style="text-align:center;margin-top:14px;">New here? <a href="#" style="color:var(--gold-bright);" onclick="switchAuthTab('register');return false;">Register instead</a></p>
+    </div>
+
+    <div id="registerPane" style="display:none;">
+      <h3 style="font-size:22px;text-transform:none;margin-bottom:18px;">Join Titan Fitness Club</h3>
+      <form onsubmit="submitRegistration(event)">
+        <div class="field"><label>Full Name</label><input type="text" id="regName" required></div>
+        <div class="field-row">
+          <div class="field"><label>Email</label><input type="email" id="regEmail" required></div>
+          <div class="field"><label>Phone Number</label><input type="tel" id="regPhone" pattern="[0-9]{10}" placeholder="10-digit mobile number" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Gender</label>
+            <select id="regGender"><option>Female</option><option>Male</option><option>Other</option></select>
+          </div>
+          <div class="field"><label>Age</label><input type="number" id="regAge" min="14" max="80" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Weight (kg)</label><input type="number" id="regWeight" min="30" max="250" required></div>
+          <div class="field"><label>Height (cm)</label><input type="number" id="regHeight" min="100" max="230" required></div>
+        </div>
+        <div class="field"><label>Fitness Goal</label>
+          <select id="regGoal"><option>Weight Loss</option><option>Muscle Gain</option><option>General Fitness</option><option>Strength & Powerlifting</option><option>Toning</option></select>
+        </div>
+        <div class="field"><label>Membership Plan</label>
+          <select id="regPlan"><option value="basic">Basic — ₹999/mo</option><option value="standard" selected>Standard — ₹1999/mo</option><option value="premium">Premium — ₹3999/mo</option></select>
+        </div>
+        <button type="submit" class="btn btn-gold btn-block"><i class="fa-solid fa-id-card"></i> Create My Membership</button>
+        <p class="form-note" style="text-align:center;margin-top:10px;">This generates your Membership ID, join date and expiry instantly.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="trialModal">
+  <div class="modal" style="max-width:400px;">
+    <button class="modal-close" onclick="closeModal('trialModal')"><i class="fa-solid fa-xmark"></i></button>
+    <h3 style="font-size:22px;text-transform:none;margin-bottom:18px;">Book A Free Trial</h3>
+    <form onsubmit="submitTrial(event)">
+      <div class="field"><label>Full Name</label><input type="text" id="trialName" required></div>
+      <div class="field"><label>Phone Number</label><input type="tel" id="trialPhone" pattern="[0-9]{10}" required></div>
+      <div class="field"><label>Preferred Date</label><input type="date" id="trialDate" required></div>
+      <button type="submit" class="btn btn-gold btn-block">Confirm Trial Session</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="renewModal">
+  <div class="modal" style="max-width:420px;">
+    <button class="modal-close" onclick="closeModal('renewModal')"><i class="fa-solid fa-xmark"></i></button>
+    <h3 style="font-size:22px;text-transform:none;margin-bottom:6px;">Renew Membership</h3>
+    <p style="color:var(--steel);font-size:13.5px;margin-bottom:18px;">Choose a plan and term — your new expiry date is calculated automatically.</p>
+    <div class="field"><label>Plan</label>
+      <select id="renewPlan"><option value="basic">Basic — ₹999/mo</option><option value="standard">Standard — ₹1999/mo</option><option value="premium">Premium — ₹3999/mo</option></select>
+    </div>
+    <div class="field"><label>Term</label>
+      <select id="renewTerm"><option value="1">1 Month</option><option value="3">3 Months (Save 5%)</option><option value="12">12 Months (2 Months Free)</option></select>
+    </div>
+    <div class="panel" style="margin:18px 0;"><div style="display:flex;justify-content:space-between;font-weight:700;"><span>Amount Payable</span><span class="mono" id="renewAmount">₹0</span></div></div>
+    <button class="btn btn-gold btn-block" onclick="confirmRenew()"><i class="fa-solid fa-rotate"></i> Confirm & Pay (Demo)</button>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="orderModal">
+  <div class="modal" style="max-width:420px;text-align:center;">
+    <button class="modal-close" onclick="closeModal('orderModal')"><i class="fa-solid fa-xmark"></i></button>
+    <i class="fa-solid fa-circle-check" style="font-size:46px;color:var(--success);margin-bottom:14px;"></i>
+    <h3 style="font-size:22px;text-transform:none;">Order Confirmed</h3>
+    <p style="color:var(--steel);margin-top:10px;font-size:14px;" id="orderModalText"></p>
+    <button class="btn btn-gold btn-block" style="margin-top:20px;" onclick="closeModal('orderModal');go('home')">Continue Shopping</button>
+  </div>
+</div>
+
+<div id="print-area" style="display:none;"></div>
+
+<a class="fab-wa" href="https://wa.me/919876543210?text=Hi%20Titan%20Fitness%20Club!" target="_blank" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+<div class="fab-ai">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-head">
+      <div class="ch-title"><span class="ch-dot"></span> Titan AI Coach</div>
+      <button onclick="toggleChat()" aria-label="Close chat"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Ask about plans, training, diet…" onkeydown="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()" aria-label="Send"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+  <button class="fab-ai-btn" onclick="toggleChat()" aria-label="Open AI Coach"><span class="pulse"></span><i class="fa-solid fa-dumbbell"></i></button>
+</div>
+
+<script>
+/* ================================================================
+   TITAN FITNESS CLUB — APPLICATION SCRIPT
+   In-memory demo data layer (no backend). State resets on reload —
+   this is a front-end product demo, not a production data store.
+   ================================================================ */
+
+/* ---------------- static reference data ---------------- */
+const PLANS = [
+  {id:'basic', name:'Basic', price:999, features:['Gym Access','Cardio Area','Locker Access']},
+  {id:'standard', name:'Standard', price:1999, features:['Gym Access','Group Classes','Personal Diet Plan']},
+  {id:'premium', name:'Premium', price:3999, features:['Gym Access','Personal Trainer','Diet Consultation','Progress Tracking']}
+];
+const TERMS = [
+  {months:1, label:'1 Month', mult:1, note:null},
+  {months:3, label:'3 Months', mult:3*0.95, note:'Save 5%'},
+  {months:12, label:'12 Months', mult:10, note:'2 Months Free'}
+];
+
+const TRAINERS = [
+  {id:'t1', name:'Arjun Mehta', role:'Strength Training Coach', exp:9, spec:'Powerlifting & Strength Programming', certs:['NSCA-CSCS','ISSA Strength Specialist'], days:'Mon, Wed, Fri · 6–8 AM'},
+  {id:'t2', name:'Priya Nair', role:'Weight Loss Expert', exp:6, spec:'Fat Loss & Metabolic Conditioning', certs:['ACE-CPT','Precision Nutrition L1'], days:'Tue, Thu, Sat · 7–8 AM'},
+  {id:'t3', name:'Karan Bhatt', role:'Bodybuilding Coach', exp:11, spec:'Hypertrophy & Competition Prep', certs:['IFBB Coach','NASM-CPT'], days:'Mon–Fri · 5–7 PM'},
+  {id:'t4', name:'Sneha Rao', role:'CrossFit Trainer', exp:7, spec:'Functional & Conditioning Workouts', certs:['CrossFit L2','CF-L2 Judge'], days:'Wed, Thu, Sat · 5–6 PM'}
+];
+
+const SLOTS = ['6:00 AM – 7:00 AM','7:00 AM – 8:00 AM','5:00 PM – 6:00 PM','6:00 PM – 7:00 PM'];
+
+const PRODUCTS = [
+  {id:'p1', cat:'Protein Powder', name:'Titan Whey Gold 1kg', price:2499, desc:'25g protein per serving, double-rich chocolate.', icon:'fa-jar', color:'#c9a24b'},
+  {id:'p2', cat:'Protein Powder', name:'Titan Whey Gold 2kg', price:4499, desc:'Bulk pack of our best-selling whey, vanilla.', icon:'fa-jar', color:'#c9a24b'},
+  {id:'p3', cat:'Mass Gainer', name:'Titan Mass Pro 3kg', price:3199, desc:'1,250 kcal per serving for clean, steady bulking.', icon:'fa-weight-hanging', color:'#e2693f'},
+  {id:'p4', cat:'Creatine', name:'Titan Creatine Monohydrate 250g', price:899, desc:'Micronized creatine for strength and power output.', icon:'fa-bolt', color:'#5fae72'},
+  {id:'p5', cat:'Pre Workout', name:'Titan Surge Pre-Workout 300g', price:1499, desc:'Caffeine and beta-alanine for explosive sessions.', icon:'fa-fire', color:'#c1502f'},
+  {id:'p6', cat:'Gym Gloves', name:'Titan Grip Gloves', price:699, desc:'Breathable leather palm with wrist support.', icon:'fa-mitten', color:'#a3a6ac'},
+  {id:'p7', cat:'Shaker Bottles', name:'Titan Steel Shaker 700ml', price:399, desc:'Leak-proof, stainless steel blender ball included.', icon:'fa-bottle-water', color:'#8a7236'},
+  {id:'p8', cat:'Resistance Bands', name:'Titan Flex Bands (Set of 5)', price:999, desc:'Latex resistance bands across five resistance levels.', icon:'fa-link', color:'#e8c873'},
+  {id:'p9', cat:'Pre Workout', name:'Titan BCAA Recovery 400g', price:1299, desc:'Branched-chain aminos to support recovery between sets.', icon:'fa-flask', color:'#c1502f'}
+];
+const CATEGORIES = ['All','Protein Powder','Mass Gainer','Creatine','Pre Workout','Gym Gloves','Shaker Bottles','Resistance Bands'];
+
+const CLASSES = [
+  {day:'Monday', time:'6:00 – 7:00 AM', name:'Strength Training', trainer:'Arjun Mehta', color:'#c9a24b'},
+  {day:'Monday', time:'5:00 – 6:00 PM', name:'HIIT', trainer:'Sneha Rao', color:'#c1502f'},
+  {day:'Tuesday', time:'7:00 – 8:00 AM', name:'Yoga', trainer:'Priya Nair', color:'#5fae72'},
+  {day:'Tuesday', time:'6:00 – 7:00 PM', name:'Zumba', trainer:'Meera Joshi', color:'#e8c873'},
+  {day:'Wednesday', time:'6:00 – 7:00 AM', name:'Functional Fitness', trainer:'Sneha Rao', color:'#a3a6ac'},
+  {day:'Wednesday', time:'5:00 – 6:00 PM', name:'Strength Training', trainer:'Arjun Mehta', color:'#c9a24b'},
+  {day:'Thursday', time:'7:00 – 8:00 AM', name:'Yoga', trainer:'Priya Nair', color:'#5fae72'},
+  {day:'Thursday', time:'6:00 – 7:00 PM', name:'HIIT', trainer:'Sneha Rao', color:'#c1502f'},
+  {day:'Friday', time:'6:00 – 7:00 AM', name:'Strength Training', trainer:'Karan Bhatt', color:'#c9a24b'},
+  {day:'Friday', time:'5:00 – 6:00 PM', name:'Zumba', trainer:'Meera Joshi', color:'#e8c873'},
+  {day:'Saturday', time:'7:00 – 8:00 AM', name:'Functional Fitness', trainer:'Sneha Rao', color:'#a3a6ac'},
+  {day:'Saturday', time:'6:00 – 7:00 PM', name:'Yoga', trainer:'Priya Nair', color:'#5fae72'},
+  {day:'Sunday', time:'All Day', name:'Open Gym / Rest Day', trainer:'—', color:'#6c6f76'}
+];
+
+const TRANSFORMATIONS = [
+  {name:'Rohit S.', goal:'Fat Loss', weeks:16, before:92, after:78, unit:'kg'},
+  {name:'Ananya K.', goal:'Muscle Gain', weeks:20, before:54, after:61, unit:'kg'},
+  {name:'Vikram T.', goal:'Fat Loss', weeks:24, before:105, after:84, unit:'kg'},
+  {name:'Divya M.', goal:'Toning', weeks:12, before:28, after:21, unit:'% body fat'}
+];
+
+const REVIEWS = [
+  {name:'Saurabh Tiwari', rating:5, text:"Booked sessions, tracked attendance, paid for renewal — all from my phone. The trainers actually check your form, not just hand you a card.", role:'Premium Member · 8 months'},
+  {name:'Neha Agarwal', rating:5, text:"Lost 9kg in four months with Priya's plan. The dashboard kept me honest when I wanted to skip a week.", role:'Standard Member · 5 months'},
+  {name:'Imran Sheikh', rating:4, text:"Equipment is genuinely well maintained and the 6 AM strength class never feels crowded.", role:'Basic Member · 3 months'},
+  {name:'Kavya Reddy', rating:5, text:"Karan's bodybuilding programming got me through my first competition prep. Worth every rupee.", role:'Premium Member · 1 year'},
+  {name:'Aditya Pandey', rating:5, text:"Renewing membership used to mean standing in line. Now it's two taps and a confirmation toast.", role:'Standard Member · 6 months'},
+  {name:'Pooja Mishra', rating:4, text:"Supplement store saved me a trip — creatine showed up the next day.", role:'Premium Member · 4 months'}
+];
+
+const NUTRITION_PLANS = [
+  {id:'n1', title:'Weight Loss Diet', goal:'Calorie deficit for steady, sustainable fat loss', cal:1700, macros:{p:35,c:35,f:30},
+    meals:['Breakfast: Oats with whey and berries','Lunch: Grilled chicken, brown rice, salad','Snack: Greek yogurt with almonds','Dinner: Paneer/fish stir-fry with vegetables']},
+  {id:'n2', title:'Muscle Gain Diet', goal:'Calorie surplus with high protein for lean mass', cal:2800, macros:{p:30,c:45,f:25},
+    meals:['Breakfast: Eggs, peanut butter toast, banana','Lunch: Rice, dal, chicken/soy chunks','Snack: Mass gainer shake','Dinner: Sweet potato, grilled fish, vegetables']},
+  {id:'n3', title:'Maintenance Diet', goal:'Balanced intake to hold current weight and performance', cal:2200, macros:{p:30,c:40,f:30},
+    meals:['Breakfast: Vegetable omelette with multigrain toast','Lunch: Quinoa or roti, mixed vegetables, lean protein','Snack: Fruit and a handful of nuts','Dinner: Light stir-fry with tofu/chicken and greens']}
+];
+
+/* ---------------- application state ---------------- */
+let nextMemberSeq = 1002;
+let nextOrderSeq = 5001;
+
+const state = {
+  members: [],
+  currentMemberId: null,
+  cart: [],
+  orders: [],
+  adminAuthed: false,
+  ui: {
+    page: 'home',
+    dashTab: 'overview',
+    adminTab: 'members',
+    category: 'All',
+    termIdx: 0,
+    payMethod: 'upi',
+    bookTrainer: 't1',
+    bookDate: '',
+    bookSlot: '',
+    chatHistory: []
+  }
+};
+
+/* seed one demo member so "View Demo Dashboard" works instantly */
+function seedDemoData(){
+  const join = new Date(); join.setDate(join.getDate()-40);
+  const demo = {
+    id:'TFC-1001',
+    name:'Rahul Verma',
+    email:'rahul.verma@example.com',
+    phone:'9876500000',
+    gender:'Male',
+    age:27,
+    weight:82,
+    height:176,
+    goal:'Weight Loss',
+    planId:'premium',
+    joinDate: join.toISOString(),
+    expiryDate: addMonths(join, 1).toISOString(),
+    bookings:[],
+    attendance: buildDemoAttendance(),
+    progress: [
+      {date: isoDaysAgo(35), weight:88, bodyFat:27},
+      {date: isoDaysAgo(28), weight:86, bodyFat:26},
+      {date: isoDaysAgo(21), weight:85, bodyFat:25},
+      {date: isoDaysAgo(14), weight:84, bodyFat:24},
+      {date: isoDaysAgo(7), weight:83, bodyFat:23.5},
+      {date: isoDaysAgo(1), weight:82, bodyFat:23}
+    ],
+    targetWeight:74,
+    notifications:[]
+  };
+  state.members.push(demo);
+
+  state.orders.push({
+    id:'TFC-ORD-5000', memberId:'TFC-1001', items:[{name:'Titan Whey Gold 1kg', qty:1, price:2499}],
+    total:2548, date: isoDaysAgo(10), payment:'UPI'
+  });
+}
+function buildDemoAttendance(){
+  const arr=[];
+  for(let i=30;i>=1;i--){
+    if(Math.random()<0.62){
+      const d = isoDaysAgo(i);
+      const hour = Math.random()<0.5? '06:1'+Math.floor(Math.random()*9)+' AM' : '06:'+Math.floor(Math.random()*9)+'0 PM';
+      arr.push({date:d, time:hour, status:'Present'});
+    }
+  }
+  return arr;
+}
+function isoDaysAgo(n){ const d=new Date(); d.setDate(d.getDate()-n); return d.toISOString(); }
+
+
+/* ============ UTILITIES ============ */
+function formatINR(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); }
+function addMonths(date, months){ const d=new Date(date); d.setMonth(d.getMonth()+months); return d; }
+function formatDate(iso){ const d=new Date(iso); return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}); }
+function formatDateTime(iso){ const d=new Date(iso); return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short'})+', '+d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'}); }
+function uid(prefix){ return prefix+'-'+Math.random().toString(36).slice(2,8).toUpperCase(); }
+
+function toast(msg, type){
+  const c = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = 'toast'+(type==='err'?' err':'');
+  el.innerHTML = '<i class="fa-solid '+(type==='err'?'fa-circle-exclamation':'fa-circle-check')+'"></i><span>'+msg+'</span>';
+  c.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateY(8px)'; setTimeout(()=>el.remove(),300); }, 3200);
+}
+
+function currentMember(){
+  return state.members.find(m=>m.id===state.currentMemberId) || null;
+}
+
+function getStatus(member){
+  const now = new Date();
+  const exp = new Date(member.expiryDate);
+  const diffDays = Math.ceil((exp - now)/(1000*60*60*24));
+  if(diffDays < 0) return {label:'Expired', cls:'status-expired', days:0};
+  if(diffDays <= 7) return {label:'Expiring Soon', cls:'status-expiring', days:diffDays};
+  return {label:'Active', cls:'status-active', days:diffDays};
+}
+
+function planById(id){ return PLANS.find(p=>p.id===id); }
+function trainerById(id){ return TRAINERS.find(t=>t.id===id); }
+function productById(id){ return PRODUCTS.find(p=>p.id===id); }
+
+/* ============ ROUTER ============ */
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const target = document.getElementById('page-'+page);
+  if(target) target.classList.add('active');
+  state.ui.page = page;
+  window.scrollTo({top:0, behavior:'smooth'});
+  document.querySelectorAll('.nav-link').forEach(a=>{
+    a.classList.toggle('active', a.dataset.nav===page);
+  });
+  closeMobileNav();
+
+  if(page==='plans') renderPlans();
+  if(page==='trainers') renderTrainers();
+  if(page==='store') renderProducts();
+  if(page==='cart') renderCart();
+  if(page==='checkout') renderCheckout();
+  if(page==='schedule') renderSchedule();
+  if(page==='stories') renderStories();
+  if(page==='nutrition') renderNutrition();
+  if(page==='dashboard') renderDashboard();
+  if(page==='admin') renderAdmin();
+}
+
+function toggleMobileNav(){
+  document.querySelector('.nav-links').classList.toggle('open');
+}
+function closeMobileNav(){
+  document.querySelector('.nav-links')?.classList.remove('open');
+}
+
+/* ============ AUTH / REGISTRATION ============ */
+function openAuth(tab){
+  document.getElementById('authModal').classList.add('open');
+  switchAuthTab(tab||'login');
+}
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+}
+function switchAuthTab(tab){
+  document.querySelectorAll('#authModal .modal-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  document.querySelectorAll('#authModal .auth-pane').forEach(p=>p.classList.toggle('active', p.id==='auth-'+tab));
+}
+
+function submitRegistration(e){
+  e.preventDefault();
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const gender = document.getElementById('regGender').value;
+  const age = parseInt(document.getElementById('regAge').value,10);
+  const weight = parseFloat(document.getElementById('regWeight').value);
+  const height = parseFloat(document.getElementById('regHeight')?.value || 170);
+  const goal = document.getElementById('regGoal').value;
+  const planId = document.getElementById('regPlan').value;
+
+  if(!name||!email||!phone||!planId){ toast('Please fill all required fields','err'); return; }
+
+  nextMemberSeq++;
+  const join = new Date();
+  const member = {
+    id: 'TFC-'+(1000+nextMemberSeq),
+    name, email, phone, gender, age, weight, height, goal, planId,
+    joinDate: join.toISOString(),
+    expiryDate: addMonths(join,1).toISOString(),
+    bookings:[], attendance:[], progress:[{date:join.toISOString(), weight, bodyFat:null}],
+    targetWeight: weight, notifications:[]
+  };
+  state.members.push(member);
+  state.currentMemberId = member.id;
+  closeModal('authModal');
+  renderNavAuthArea();
+  toast('Welcome to Titan Fitness Club! Membership ID: '+member.id);
+  go('dashboard');
+}
+
+function doLogin(e){
+  e.preventDefault();
+  const id = document.getElementById('loginId').value.trim().toUpperCase();
+  const phone = document.getElementById('loginPhone').value.trim();
+  const member = state.members.find(m=>m.id.toUpperCase()===id && m.phone===phone);
+  if(!member){ toast('No matching member found. Check ID & phone, or use demo login.','err'); return; }
+  state.currentMemberId = member.id;
+  closeModal('authModal');
+  renderNavAuthArea();
+  go('dashboard');
+}
+
+function demoLogin(){
+  state.currentMemberId = 'TFC-1001';
+  closeModal('authModal');
+  renderNavAuthArea();
+  go('dashboard');
+}
+
+function logout(){
+  state.currentMemberId = null;
+  renderNavAuthArea();
+  go('home');
+}
+
+function renderNavAuthArea(){
+  const el = document.getElementById('navAuthArea');
+  const m = currentMember();
+  if(m){
+    el.innerHTML = '<button class="user-chip" onclick="go(\'dashboard\')"><i class="fa-solid fa-circle-user"></i><span>'+m.name.split(' ')[0]+'</span></button>';
+  } else {
+    el.innerHTML = '<button class="btn btn-line btn-sm" onclick="openAuth(\'login\')">Login</button><button class="btn btn-gold btn-sm" onclick="openAuth(\'register\')">Join Now</button>';
+  }
+}
+
+/* ============ PLANS ============ */
+function renderPlans(){
+  const toggleEl = document.getElementById('termToggle');
+  if(toggleEl && !toggleEl.dataset.built){
+    toggleEl.dataset.built='1';
+    toggleEl.innerHTML = TERMS.map((t,i)=>'<button class="term-btn'+(i===state.ui.termIdx?' active':'')+'" data-i="'+i+'" onclick="setTerm('+i+')">'+t.label+(t.note?' <span class="term-note">'+t.note+'</span>':'')+'</button>').join('');
+  }
+  const grid = document.getElementById('plansGrid');
+  const term = TERMS[state.ui.termIdx];
+  grid.innerHTML = PLANS.map(p=>{
+    const price = Math.round(p.price * term.months * (1-term.discount));
+    return '<div class="plan-card'+(p.featured?' featured':'')+'">'
+      + (p.featured?'<div class="plan-ribbon">MOST POPULAR</div>':'')
+      + '<div class="plan-name">'+p.name+'</div>'
+      + '<div class="plan-tagline">'+p.tagline+'</div>'
+      + '<div class="plan-price"><span class="amt">'+formatINR(price)+'</span><span class="per">/ '+term.label+'</span></div>'
+      + '<ul class="plan-feats">'+p.features.map(f=>'<li><i class="fa-solid fa-check"></i>'+f+'</li>').join('')+'</ul>'
+      + '<button class="btn btn-gold btn-block" onclick="openAuth(\'register\'); presetPlan(\''+p.id+'\')">Buy Membership</button>'
+      + '<button class="btn btn-line btn-block" onclick="openTrialModal()">Start Free Trial</button>'
+      + '</div>';
+  }).join('');
+}
+function setTerm(i){
+  state.ui.termIdx = i;
+  document.querySelectorAll('.term-btn').forEach((b,idx)=>b.classList.toggle('active', idx===i));
+  renderPlans();
+}
+function presetPlan(id){
+  setTimeout(()=>{ const sel = document.getElementById('regPlan'); if(sel) sel.value = id; }, 50);
+}
+
+/* ============ TRAINERS ============ */
+function renderTrainers(){
+  const grid = document.getElementById('trainersGrid');
+  grid.innerHTML = TRAINERS.map(t=>{
+    const initials = t.name.split(' ').map(n=>n[0]).join('');
+    return '<div class="trainer-card">'
+      + '<div class="trainer-photo"><span>'+initials+'</span></div>'
+      + '<div class="trainer-body">'
+      + '<div class="trainer-name">'+t.name+'</div>'
+      + '<div class="trainer-role">'+t.role+'</div>'
+      + '<div class="trainer-meta"><i class="fa-solid fa-briefcase"></i> '+t.exp+' yrs experience</div>'
+      + '<div class="trainer-certs">'+t.certs.map(c=>'<span class="chip">'+c+'</span>').join('')+'</div>'
+      + '<button class="btn btn-gold btn-block btn-sm" onclick="contactTrainer(\''+t.id+'\')"><i class="fa-brands fa-whatsapp"></i> Contact Trainer</button>'
+      + '</div></div>';
+  }).join('');
+}
+function contactTrainer(id){
+  const t = trainerById(id);
+  window.open('https://wa.me/919876543210?text='+encodeURIComponent('Hi '+t.name+', I would like to know more about training sessions at Titan Fitness Club.'), '_blank');
+}
+
+/* ============ STORE / CART / CHECKOUT ============ */
+function renderProducts(){
+  const chips = document.getElementById('catChips');
+  if(chips && !chips.dataset.built){
+    chips.dataset.built='1';
+    chips.innerHTML = CATEGORIES.map(c=>'<button class="cat-chip'+(c===state.ui.category?' active':'')+'" data-c="'+c+'" onclick="filterCategory(\''+c+'\')">'+c+'</button>').join('');
+  }
+  const grid = document.getElementById('productsGrid');
+  const list = state.ui.category==='All' ? PRODUCTS : PRODUCTS.filter(p=>p.cat===state.ui.category);
+  grid.innerHTML = list.map(p=>{
+    return '<div class="product-card">'
+      + '<div class="product-art" style="background:'+p.color+'22;color:'+p.color+'"><i class="fa-solid '+p.icon+'"></i></div>'
+      + '<div class="product-cat">'+p.cat+'</div>'
+      + '<div class="product-name">'+p.name+'</div>'
+      + '<div class="product-desc">'+p.desc+'</div>'
+      + '<div class="product-row"><span class="product-price">'+formatINR(p.price)+'</span><button class="btn btn-gold btn-sm" onclick="addToCart(\''+p.id+'\')">Buy Now</button></div>'
+      + '</div>';
+  }).join('') || '<p class="muted">No products in this category yet.</p>';
+}
+function filterCategory(c){
+  state.ui.category = c;
+  document.querySelectorAll('.cat-chip').forEach(b=>b.classList.toggle('active', b.dataset.c===c));
+  renderProducts();
+}
+function addToCart(id){
+  const existing = state.cart.find(c=>c.id===id);
+  if(existing) existing.qty++;
+  else state.cart.push({id, qty:1});
+  updateCartCount();
+  toast('Added to cart');
+}
+function updateCartCount(){
+  const count = state.cart.reduce((s,c)=>s+c.qty,0);
+  document.querySelectorAll('.cart-count').forEach(el=>{ el.textContent = count; el.style.display = count? 'flex':'none'; });
+}
+function changeQty(id, delta){
+  const item = state.cart.find(c=>c.id===id);
+  if(!item) return;
+  item.qty += delta;
+  if(item.qty<=0) state.cart = state.cart.filter(c=>c.id!==id);
+  renderCart(); updateCartCount();
+}
+function removeFromCart(id){
+  state.cart = state.cart.filter(c=>c.id!==id);
+  renderCart(); updateCartCount();
+}
+function cartTotal(){
+  return state.cart.reduce((s,c)=>{ const p = productById(c.id); return s + (p?p.price*c.qty:0); }, 0);
+}
+function renderCart(){
+  const wrap = document.getElementById('cartItems');
+  if(!state.cart.length){
+    wrap.innerHTML = '<div class="empty-row"><i class="fa-solid fa-cart-shopping"></i><p>Your cart is empty.</p><button class="btn btn-gold" onclick="go(\'store\')">Browse Store</button></div>';
+    document.getElementById('cartSummary').style.display='none';
+    return;
+  }
+  document.getElementById('cartSummary').style.display='block';
+  wrap.innerHTML = state.cart.map(c=>{
+    const p = productById(c.id);
+    return '<div class="cart-row">'
+      + '<div class="cart-art" style="background:'+p.color+'22;color:'+p.color+'"><i class="fa-solid '+p.icon+'"></i></div>'
+      + '<div class="cart-info"><div class="cart-name">'+p.name+'</div><div class="cart-price">'+formatINR(p.price)+'</div></div>'
+      + '<div class="cart-qty"><button onclick="changeQty(\''+p.id+'\',-1)">−</button><span>'+c.qty+'</span><button onclick="changeQty(\''+p.id+'\',1)">+</button></div>'
+      + '<div class="cart-line-total">'+formatINR(p.price*c.qty)+'</div>'
+      + '<button class="cart-remove" onclick="removeFromCart(\''+p.id+'\')"><i class="fa-solid fa-trash"></i></button>'
+      + '</div>';
+  }).join('');
+  const sub = cartTotal();
+  const tax = Math.round(sub*0.05);
+  document.getElementById('cartSubtotal').textContent = formatINR(sub);
+  document.getElementById('cartTotal').textContent = formatINR(sub+tax);
+}
+function goCheckout(){
+  if(!state.cart.length){ toast('Your cart is empty','err'); return; }
+  go('checkout');
+}
+function renderCheckout(){
+  const sub = cartTotal();
+  const tax = Math.round(sub*0.05);
+  document.getElementById('checkoutTotal').textContent = formatINR(sub+tax);
+}
+function selectPay(method){
+  state.ui.payMethod = method;
+  document.querySelectorAll('.pay-chip').forEach(c=>c.classList.toggle('sel', c.dataset.pay===method));
+}
+function placeOrder(e){
+  e.preventDefault();
+  if(!state.cart.length){ toast('Cart is empty','err'); return; }
+  const sub = cartTotal();
+  const tax = Math.round(sub*0.05);
+  nextOrderSeq++;
+  const order = {
+    id: uid('TFC-ORD'),
+    memberId: state.currentMemberId,
+    items: state.cart.map(c=>{ const p=productById(c.id); return {name:p.name, qty:c.qty, price:p.price}; }),
+    total: sub+tax,
+    date: new Date().toISOString(),
+    payment: state.ui.payMethod
+  };
+  state.orders.push(order);
+  const m = currentMember();
+  if(m){ m.bookings = m.bookings || []; }
+  state.cart = [];
+  updateCartCount();
+  document.getElementById('orderModalText').innerHTML = 'Order <strong>'+order.id+'</strong> confirmed via '+order.payment.toUpperCase()+'.<br>Total paid: '+formatINR(order.total);
+  document.getElementById('orderModal').classList.add('open');
+}
+
+/* ============ SCHEDULE ============ */
+function renderSchedule() {
+  const tbody = document.getElementById('scheduleBody');
+  if (tbody) {
+    tbody.innerHTML = CLASSES.map(c => `<tr><td>${c.day}</td><td>${c.time}</td><td><span class="cls-tag"><span class="dot" style="background:${c.color}"></span>${c.name}</span></td><td>${c.trainer}</td></tr>`).join('');
+  }
+
+  const mobile = document.getElementById('scheduleMobile');
+  if (mobile) {
+    const days = [...new Set(CLASSES.map(c => c.day))];
+    mobile.innerHTML = days.map(d => {
+      const dayClasses = CLASSES.filter(c => c.day === d);
+      return `<div class="day-block"><h4>${d}</h4>` +
+        dayClasses.map(c => `<div class="class-row"><div><div style="font-weight:700;color:var(--bone);">${c.name}</div><div style="font-size:12px;color:var(--steel-dim);">${c.trainer}</div></div><div style="text-align:right;">${c.time}</div></div>`).join('') +
+        `</div>`;
+    }).join('');
+  }
+}
+
+/* ============ SUCCESS STORIES ============ */
+function renderStories() {
+  const tGrid = document.getElementById('transformGrid');
+  if (tGrid) {
+    tGrid.innerHTML = TRANSFORMATIONS.map(t => {
+      const hBefore = 40;
+      const hAfter = Math.max(10, Math.round((t.after / t.before) * 40)); 
+      return `<div class="transform-card">
+        <div class="tr-name">${t.name}</div>
+        <div class="tr-goal">${t.goal}</div>
+        <div class="tr-bars">
+          <div class="tr-bar before"><div class="bar" style="height:${hBefore}px"></div><div class="bv">${t.before}${t.unit}</div><div class="bl">Before</div></div>
+          <div class="tr-bar after"><div class="bar" style="height:${hAfter}px"></div><div class="bv">${t.after}${t.unit}</div><div class="bl">After</div></div>
+        </div>
+        <div class="tr-duration">${t.weeks} Weeks</div>
+      </div>`;
+    }).join('');
+  }
+
+  const rGrid = document.getElementById('reviewsGrid');
+  if (rGrid) {
+    rGrid.innerHTML = REVIEWS.map(r => `
+      <div class="review-card">
+        <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+        <p>"${r.text}"</p>
+        <div class="review-foot"><span>${r.name}</span><span>${r.role}</span></div>
+      </div>
+    `).join('');
+  }
+}
+
+/* ============ NUTRITION ============ */
+function renderNutrition() {
+  const grid = document.getElementById('nutritionGrid');
+  if (grid) {
+    grid.innerHTML = NUTRITION_PLANS.map(n => `
+      <div class="nutri-card">
+        <h3>${n.title}</h3>
+        <div class="nutri-goal">${n.goal}</div>
+        <div class="macro-row">
+          <div class="macro-pill"><div class="mv">${n.cal}</div><div class="ml">KCAL</div></div>
+          <div class="macro-pill"><div class="mv">${n.macros.p}g</div><div class="ml">PRO</div></div>
+          <div class="macro-pill"><div class="mv">${n.macros.c}g</div><div class="ml">CARB</div></div>
+          <div class="macro-pill"><div class="mv">${n.macros.f}g</div><div class="ml">FAT</div></div>
+        </div>
+        <ul class="meal-list">${n.meals.map(m => `<li><i class="fa-solid fa-utensils"></i> ${m}</li>`).join('')}</ul>
+        <button class="btn btn-line btn-block" style="margin-top:auto" onclick="window.print()">Print Plan</button>
+      </div>
+    `).join('');
+  }
+}
+
+/* ============ CONTACT & FREE TRIAL ============ */
+function submitContact(e) {
+  e.preventDefault();
+  toast('Message sent successfully! We will get back to you shortly.');
+  e.target.reset();
+}
+
+function openTrialModal() {
+  document.getElementById('trialModal').classList.add('open');
+}
+
+function submitTrial(e) {
+  e.preventDefault();
+  toast('Trial session booked! We will confirm the time via WhatsApp.');
+  closeModal('trialModal');
+  e.target.reset();
+}
+
+/* ============ MEMBER DASHBOARD ============ */
+function setDashTab(tab) {
+  state.ui.dashTab = tab;
+  renderDashboard();
+}
+
+function renderDashboard() {
+  const m = currentMember();
+  if (!m) { go('home'); openAuth('login'); return; }
+
+  document.querySelectorAll('.dash-side button, .dash-tabbar button').forEach(b => {
+    b.classList.toggle('active', b.dataset.dtab === state.ui.dashTab);
+  });
+
+  const main = document.getElementById('dashMain');
+  if (!main) return;
+
+  const stat = getStatus(m);
+  const plan = planById(m.planId);
+
+  if (state.ui.dashTab === 'overview') {
+    main.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:28px;flex-wrap:wrap;gap:16px;">
+        <div><h2 style="font-size:32px;text-transform:none;">Hello, ${m.name.split(' ')[0]}</h2><p style="color:var(--steel);margin-top:4px;">ID: <span class="mono">${m.id}</span></p></div>
+        <div class="status-badge ${stat.cls}"><span class="dot"></span>${stat.label}</div>
+      </div>
+      <div class="dash-grid">
+        <div class="kpi-card"><div class="kv">${plan.name}</div><div class="kl">Current Plan</div></div>
+        <div class="kpi-card"><div class="kv">${stat.days}</div><div class="kl">Days Left</div></div>
+        <div class="kpi-card"><div class="kv">${m.attendance.length}</div><div class="kl">Sessions Attended</div></div>
+        <div class="kpi-card"><div class="kv">${m.weight} <span style="font-size:14px">kg</span></div><div class="kl">Current Weight</div></div>
+      </div>
+      ${stat.days <= 7 ? `<div class="panel" style="border-color:var(--warn);background:rgba(217,154,53,.05);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
+          <div><strong style="color:var(--warn)">Membership Expiring</strong><p style="color:var(--steel);font-size:13.5px;margin-top:4px;">Your access expires in ${stat.days} days. Renew now to avoid interruption.</p></div>
+          <button class="btn btn-gold btn-sm" onclick="openRenewModal()">Renew Now</button>
+        </div>
+      </div>` : ''}
+      <div class="panel">
+        <div class="panel-title">Recent Activity</div>
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Activity</th><th>Status</th></tr></thead>
+          <tbody>
+            ${m.attendance.slice(0, 3).map(a => `<tr><td>${formatDate(a.date)}</td><td>Gym Check-in</td><td><span style="color:var(--success)">Completed</span></td></tr>`).join('')}
+            ${!m.attendance.length ? `<tr><td colspan="3" class="empty-row">No recent activity</td></tr>` : ''}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } else if (state.ui.dashTab === 'book') {
+    main.innerHTML = `
+      <h2 style="font-size:24px;text-transform:none;margin-bottom:20px;">Book A Session</h2>
+      <div class="panel">
+        <form onsubmit="submitBooking(event)">
+          <div class="field"><label>Select Trainer</label>
+            <div class="trainer-pick" id="dashTrainerPick">
+              ${TRAINERS.map(t => `<div class="tp-card ${t.id === state.ui.bookTrainer ? 'sel' : ''}" onclick="selectBookTrainer('${t.id}')">
+                <div class="av">${t.name[0]}</div><div class="nm">${t.name}</div><div class="rl">${t.role}</div>
+              </div>`).join('')}
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Date</label><input type="date" id="bookDate" required></div>
+            <div class="field"><label>Time Slot</label>
+              <select id="bookSlot" required><option value="">Select Time</option>${SLOTS.map(s => `<option>${s}</option>`).join('')}</select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-gold">Confirm Booking</button>
+        </form>
+      </div>
+    `;
+  } else if (state.ui.dashTab === 'bookings') {
+    main.innerHTML = `
+      <h2 style="font-size:24px;text-transform:none;margin-bottom:20px;">My Bookings</h2>
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>Date & Time</th><th>Trainer</th><th>Status</th></tr></thead>
+          <tbody>
+            ${(m.bookings || []).map(b => `<tr><td>${formatDate(b.date)} · ${b.slot}</td><td>${trainerById(b.trainerId).name}</td><td>Upcoming</td></tr>`).join('')}
+            ${!(m.bookings || []).length ? `<tr><td colspan="3" class="empty-row">No upcoming bookings</td></tr>` : ''}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } else if (state.ui.dashTab === 'attendance') {
+    main.innerHTML = `
+      <h2 style="font-size:24px;text-transform:none;margin-bottom:20px;">Attendance History</h2>
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>Date</th><th>Check-in Time</th></tr></thead>
+          <tbody>
+            ${m.attendance.map(a => `<tr><td>${formatDate(a.date)}</td><td>${a.time}</td></tr>`).join('')}
+            ${!m.attendance.length ? `<tr><td colspan="2" class="empty-row">No attendance records yet</td></tr>` : ''}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } else if (state.ui.dashTab === 'progress') {
+    main.innerHTML = `
+      <h2 style="font-size:24px;text-transform:none;margin-bottom:20px;">Progress Tracking</h2>
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;margin-bottom:16px;">
+          <div><div style="font-size:12px;color:var(--steel-dim);text-transform:uppercase;">Current Weight</div><div style="font-size:24px;font-weight:700;color:var(--gold-bright);" class="mono">${m.weight} kg</div></div>
+          <div style="text-align:right;"><div style="font-size:12px;color:var(--steel-dim);text-transform:uppercase;">Goal Weight</div><div style="font-size:24px;font-weight:700;color:var(--bone);" class="mono">${m.targetWeight || '--'} kg</div></div>
+        </div>
+        <div class="bmi-meter"><div class="needle" style="left:${Math.max(0, Math.min(100, (m.weight - 50) * 1.5))}%"></div></div>
+        <div class="bmi-scale"><span>Underweight</span><span>Optimal</span><span>Overweight</span></div>
+      </div>
+    `;
+  } else if (state.ui.dashTab === 'orders') {
+    const myOrders = state.orders.filter(o => o.memberId === m.id);
+    main.innerHTML = `
+      <h2 style="font-size:24px;text-transform:none;margin-bottom:20px;">My Orders</h2>
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>Order ID</th><th>Date</th><th>Total</th><th>Status</th></tr></thead>
+          <tbody>
+            ${myOrders.map(o => `<tr><td class="mono" style="color:var(--gold-bright)">${o.id}</td><td>${formatDate(o.date)}</td><td>${formatINR(o.total)}</td><td>Processing</td></tr>`).join('')}
+            ${!myOrders.length ? `<tr><td colspan="4" class="empty-row">No store orders</td></tr>` : ''}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+}
+
+function selectBookTrainer(id) {
+  state.ui.bookTrainer = id;
+  renderDashboard();
+}
+
+function submitBooking(e) {
+  e.preventDefault();
+  const d = document.getElementById('bookDate').value;
+  const s = document.getElementById('bookSlot').value;
+  if (!d || !s) return toast('Select date and time', 'err');
+  
+  const m = currentMember();
+  m.bookings = m.bookings || [];
+  m.bookings.push({ trainerId: state.ui.bookTrainer, date: d, slot: s });
+  toast('Session booked successfully!');
+  setDashTab('bookings');
+}
+
+/* ============ MEMBERSHIP RENEWAL ============ */
+function openRenewModal() {
+  const m = currentMember(); 
+  if (!m) return;
+  document.getElementById('renewPlan').value = m.planId;
+  document.getElementById('renewTerm').onchange = updateRenewPrice;
+  document.getElementById('renewPlan').onchange = updateRenewPrice;
+  document.getElementById('renewModal').classList.add('open');
+  updateRenewPrice();
+}
+
+function updateRenewPrice() {
+  const pid = document.getElementById('renewPlan').value;
+  const tidx = document.getElementById('renewTerm').selectedIndex;
+  const p = planById(pid);
+  const t = TERMS[tidx];
+  const discount = t.mult === t.months ? 0 : 1 - (t.mult / t.months);
+  const amt = Math.round(p.price * t.months * (1 - discount));
+  document.getElementById('renewAmount').textContent = formatINR(amt);
+}
+
+function confirmRenew() {
+  const m = currentMember();
+  const pid = document.getElementById('renewPlan').value;
+  const tidx = document.getElementById('renewTerm').selectedIndex;
+  const t = TERMS[tidx];
+  
+  m.planId = pid;
+  const curExp = new Date(m.expiryDate);
+  const baseDate = curExp > new Date() ? curExp : new Date();
+  m.expiryDate = addMonths(baseDate, t.months).toISOString();
+  
+  toast('Membership renewed successfully!');
+  closeModal('renewModal');
+  renderDashboard();
+}
+
+/* ============ ADMIN PORTAL ============ */
+function adminLogin(e) {
+  e.preventDefault();
+  const u = document.getElementById('adminUser').value;
+  const p = document.getElementById('adminPass').value;
+  if (u === 'admin' && p === 'titan-admin') {
+    state.adminAuthed = true;
+    go('admin');
+  } else {
+    toast('Invalid credentials', 'err');
+  }
+}
+
+function adminLogout() {
+  state.adminAuthed = false;
+  go('home');
+}
+
+function setAdminTab(tab) {
+  state.ui.adminTab = tab;
+  renderAdmin();
+}
+
+function renderAdmin() {
+  if (!state.adminAuthed) { go('admin-login'); return; }
+  
+  const tabs = document.getElementById('adminTabs');
+  tabs.innerHTML = `
+    <button class="${state.ui.adminTab === 'members' ? 'active' : ''}" onclick="setAdminTab('members')">Members</button>
+    <button class="${state.ui.adminTab === 'orders' ? 'active' : ''}" onclick="setAdminTab('orders')">Orders</button>
+  `;
+
+  const main = document.getElementById('adminMain');
+  if (state.ui.adminTab === 'members') {
+    main.innerHTML = `
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>ID</th><th>Name</th><th>Plan</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody>
+            ${state.members.map(m => {
+              const st = getStatus(m);
+              return `<tr>
+                <td class="mono" style="color:var(--gold-bright)">${m.id}</td>
+                <td>${m.name}</td>
+                <td>${planById(m.planId).name}</td>
+                <td><span class="status-badge ${st.cls}" style="padding:2px 8px;font-size:10px;"><span class="dot"></span>${st.label}</span></td>
+                <td><div class="table-actions"><button onclick="toast('Check-in logged for ${m.name}')">Check-in</button></div></td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } else {
+    main.innerHTML = `
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>Order ID</th><th>Customer ID</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody>
+            ${state.orders.map(o => `<tr>
+              <td class="mono" style="color:var(--gold-bright)">${o.id}</td>
+              <td class="mono">${o.memberId}</td>
+              <td>${formatINR(o.total)}</td>
+              <td>Pending</td>
+            </tr>`).join('')}
+            ${!state.orders.length ? `<tr><td colspan="4" class="empty-row">No orders recorded</td></tr>` : ''}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+}
+
+/* ============ AI COACH CHATBOT ============ */
+function toggleChat() {
+  const p = document.getElementById('chatPanel');
+  p.classList.toggle('open');
+  if (p.classList.contains('open') && state.ui.chatHistory.length === 0) {
+    addChatMsg('bot', 'Hi! I am the Titan AI Coach. How can I help you with your training, diet, or membership today?');
+  }
+}
+
+function addChatMsg(sender, text) {
+  state.ui.chatHistory.push({ sender, text });
+  const b = document.getElementById('chatBody');
+  b.innerHTML += `<div class="chat-msg ${sender}">${text}</div>`;
+  b.scrollTop = b.scrollHeight;
+}
+
+function sendChat() {
+  const inp = document.getElementById('chatInput');
+  const v = inp.value.trim();
+  if (!v) return;
+  
+  inp.value = '';
+  addChatMsg('user', v);
+
+  const b = document.getElementById('chatBody');
+  const typingId = 'typing-' + Date.now();
+  b.innerHTML += `<div class="chat-msg bot typing" id="${typingId}"><span></span><span></span><span></span></div>`;
+  b.scrollTop = b.scrollHeight;
+
+  setTimeout(() => {
+    document.getElementById(typingId).remove();
+    let reply = "I can definitely help with that! However, for personalized advice, please contact one of our certified trainers from your dashboard.";
+    
+    if (v.toLowerCase().includes('plan') || v.toLowerCase().includes('price')) {
+      reply = "We offer Basic (₹999/mo), Standard (₹1999/mo), and Premium (₹3999/mo) plans. Check the Plans section for details.";
+    } else if (v.toLowerCase().includes('time') || v.toLowerCase().includes('hour')) {
+      reply = "We are open Mon–Sat 5:00 AM – 10:00 PM, and Sun 7:00 AM – 12:00 PM.";
+    } else if (v.toLowerCase().includes('diet') || v.toLowerCase().includes('food')) {
+      reply = "Check out our free nutrition plans in the Nutrition tab, tailored for fat loss, muscle gain, and maintenance.";
+    }
+    
+    addChatMsg('bot', reply);
+  }, 1200);
+}
+
+/* ============ INITIALIZATION ============ */
+window.onload = function() {
+  seedDemoData();
+  updateCartCount();
+  renderNavAuthArea();
+
+  setTimeout(() => {
+    document.getElementById('statMembers').textContent = '1,240';
+    document.getElementById('statTrainers').textContent = '18';
+    document.getElementById('statStories').textContent = '350+';
+    document.getElementById('statYears').textContent = '12';
+  }, 800);
+
+  go('home');
+};
+</script>
+</body>
+</html>
